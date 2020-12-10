@@ -1,0 +1,59 @@
+import java.util.*;
+import java.io.*;
+
+public class Main {
+
+    public static final String text = "abcdefghijklmnopqrstuvwxyz";
+
+    static String encrypt(String plain, int key) {
+        int l = plain.length();
+        String s = "";
+        int i = 0;
+        int x;
+        char a, y;
+        for (i = 0; i < l; i++) {
+            a = plain.charAt(i);
+            if (a != ' ') {
+                x = text.indexOf(a);
+                y = text.charAt((x + key) % 26);
+                s += y;
+            } else {
+                s += a;
+            }
+        }
+        return s;
+    }
+
+    public static void main(String args[]) throws IOException {
+        int ch, key = 0;
+        String plain = "", cipher = "", c, result;
+        InputStreamReader ir = new InputStreamReader(System.in);
+        BufferedReader br = new BufferedReader(ir);
+        do {
+            System.out.println("Caesar Cipher");
+            System.out.println("1. Read Plaintext");
+            System.out.println("2. Read Key");
+            System.out.println("3. Encrypt");
+            ch = Integer.parseInt(br.readLine());
+            switch (ch) {
+                case 1: {
+                    System.out.println("Enter Plaintext");
+                    plain = br.readLine();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Enter key");
+                    key = Integer.parseInt(br.readLine());
+                    break;
+                }
+                case 3: {
+                    cipher = encrypt(plain.toLowerCase(), key);
+                    System.out.println("Encypted String:" + cipher);
+                    break;
+                }
+            }
+            System.out.println("Do you want to exit?(y/n)");
+            c = br.readLine();
+        } while (!(c.equals("y")));
+    }
+}
